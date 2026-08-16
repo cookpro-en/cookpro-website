@@ -20,7 +20,7 @@ export const getProductData = async (url: string) => {
     skipEmptyLines: true,
   });
 
-  return ;
+  return data.map(productRow => mapRowToProduct(productRow));
 };
 
 export default getProductData;
