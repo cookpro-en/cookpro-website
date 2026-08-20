@@ -1,7 +1,20 @@
 import * as Papa from "papaparse";
 import type { Product } from "../types/Product.ts";
 
-const mapRowToProduct = (row: Record<string, string>): Product => {
+const mapRowToProduct = (row: Record<string, string>): Product | null => {
+  if (!row["sku"]) {
+    return null;
+  }
+
+  const isIncomplete = Object.entries(row).some(
+    ([key, value]) => key !== "sku" && (!value || value.trim() === "")
+  );
+
+  if (isIncomplete) {
+    console.warn(`Skipping incomplete row (SKU: ${row["sku"]})`);
+    return null;
+  }
+
   const bullets = row["bullets"]
     .split("\n")
     .map((bullet) => bullet.trim())
