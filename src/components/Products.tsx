@@ -1,7 +1,18 @@
-const Products = () => {
-  return (
-    <div>Products</div>
-  )
-}
+import { useOutletContext } from "react-router";
+import ProductCard from "./ProductCard.tsx";
+import type { Product } from "../types/Product";
 
-export default Products
+const Products = () => {
+  const { products } = useOutletContext<{ products: Product[] }>();
+
+  return (
+    <section>
+      <div>Products</div>
+      {products.map((product) => (
+        <ProductCard product={product} />
+      ))}
+    </section>
+  );
+};
+
+export default Products;
