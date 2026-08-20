@@ -3,8 +3,11 @@ import getProductsData from "./api/productsApi.ts";
 const CSV_URL =
   "https://docs.google.com/spreadsheets/d/e/2PACX-1vQlVfCapbSNNHtrPoRwZznfQa_LV8hTie-iTqSxs3dqHkbXyNYuffzmAOOppeRBKuU2DAK7NkPV6Cd-/pub?gid=0&single=true&output=csv";
 
+const products = await getProductsData(CSV_URL);
+
+console.log(products);
+
 function App() {
-  getProductsData(CSV_URL).then((products) => console.log(products));
   return <>Hello World</>;
 }
 
