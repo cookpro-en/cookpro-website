@@ -1,4 +1,3 @@
-import "./App.css";
 import getProductsData from "./api/productsApi.ts";
 
 const CSV_URL =
