@@ -2,12 +2,26 @@ import * as Papa from "papaparse";
 import type { Product } from "../types/Product.ts";
 
 const mapRowToProduct = (row: Record<string, string>): Product => {
+  const bullets = row["bullets"]
+    .split("\n")
+    .map((bullet) => bullet.trim())
+    .filter((bullet) => bullet.length > 0);
+
+    const imageUrls = row["imageUrl"]
+      .split(';')
+      .map(imageUrl => imageUrl.trim())
+      .filter(imageUrl => imageUrl.length > 0);
+
   return {
     sku: row["sku"],
     name: row["name"],
     description: row["description"],
-    category: row["category"],
-    imageUrl: row["imageUrl"],
+    bullets: bullets,
+    brand: row["brand"],
+    imageUrl: {
+      main: imageUrls[0] ?? "",
+      alts: imageUrls.slice(1),
+    },
   };
 };
 
@@ -20,7 +34,7 @@ export const getProductData = async (url: string) => {
     skipEmptyLines: true,
   });
 
-  return data.map(productRow => mapRowToProduct(productRow));
+  return data.map((productRow) => mapRowToProduct(productRow));
 };
 
 export default getProductData;
